@@ -51,6 +51,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::get('/admin/view-edit-buku/{buku}', [DataBukuController::class, 'edit']);
 
+    Route::put('/admin/edit-buku/{buku}', [DataBukuController::class, 'update']);
+
     Route::delete('/admin/delete-buku/{buku}', [DataBukuController::class, 'destroy']);
 
 });

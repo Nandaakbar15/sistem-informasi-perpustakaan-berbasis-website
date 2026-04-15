@@ -90,20 +90,26 @@ class DataBukuController extends Controller
             'nama_buku' => 'required',
             'penerbit' => 'required',
             'status' => 'required',
-            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Tidak perlu required
         ]);
 
         if ($request->hasFile('gambar')) {
-            if($request->gambarLama) {
-                Storage::delete($request->gambarLama);
+            // 1. Hapus gambar lama dari folder storage
+            if ($request->gambarLama) {
+                Storage::disk('public')->delete($request->gambarLama);
             }
+
+            // 2. Upload gambar baru
             $file = $request->file('gambar');
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('images', $fileName, 'public');
-            $validateData['gambar'] = '/storage/' . $path;
-        } else {
-            $validatedData['gambar'] = $buku->gambar;
+            $file->storeAs('images', $fileName, 'public');
+
+            // 3. Masukkan path ke array data (tanpa prefix /storage/)
+            $validateData['gambar'] = 'images/' . $fileName;
         }
+
+        // Jika tidak ada gambar baru, $validateData['gambar'] otomatis tidak ada,
+        // sehingga data gambar lama di DB tidak akan berubah.
 
         $buku->update($validateData);
 

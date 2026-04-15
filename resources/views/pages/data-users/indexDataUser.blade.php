@@ -33,46 +33,52 @@
         </div>
 
         <!-- Cards -->
-        <div class="relative overflow-x-auto shadow-xs rounded-base border border-default">
-            <table class="w-full text-sm text-left rtl:text-right text-body bg-white">
-                <thead class="text-sm text-body border-b border-default-medium bg-slate-200">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 font-medium">
-                            ID User
-                        </th>
-                        <th scope="col" class="px-6 py-3 font-medium">
-                            Username
-                        </th>
-                        <th scope="col" class="px-6 py-3 font-medium">
-                            Email
-                        </th>
-                        <th scope="col" class="px-6 py-3 font-medium">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($user as $item)
-                        <tr class="bg-neutral-primary-soft border-b border-default hover:bg-neutral-secondary-medium">
-                            <th scope="row" class="px-6 py-4 font-medium text-heading whitespace-nowrap">
-                                {{ $item->id }}
+        <div class="bg-white dark:bg-gray-800 shadow-lg rounded-sm border border-gray-200 dark:border-gray-700">
+
+            <div class="overflow-x-auto">
+                <table class="table-auto w-full dark:text-gray-300">
+                    <thead
+                        class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-700 dark:bg-opacity-50 border-t border-b border-gray-200 dark:border-gray-700">
+                        <tr>
+                            <th class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                <div class="font-semibold text-left">Username</div>
                             </th>
-                            <td class="px-6 py-4">
-                                {{ $item->name }}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $item->email }}
-                            </td>
-                            <td class="px-6 py-4 space-x-2">
-                                <a href="#"
-                                    class="inline-block py-3 px-2 bg-red-500 hover:bg-red-700 rounded-lg shadow-lg text-white">Delete</a>
-                                <a href="#"
-                                    class="inline-block py-3 px-2 bg-blue-500 hover:bg-blue-700 rounded-lg shadow-lg text-white">Detail</a>
-                            </td>
+                            <th class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                <div class="font-semibold text-left">Email</div>
+                            </th>
+                            <th class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                <div class="font-semibold text-left">Aksi</div>
+                            </th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="text-sm divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach ($user as $data)
+                            <tr>
+                                <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                    <div class="font-medium text-gray-800 dark:text-gray-100">{{ $data->name }}
+                                    </div>
+                                </td>
+                                <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap">
+                                    <div class="text-left">{{ $data->email }}</div>
+                                </td>
+                                <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
+                                    <div class="flex items-center justify-center space-x-2">
+                                        <form action="/admin/delete-buku/{{ $data->id_buku }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="inline-block py-2 px-3 text-white bg-red-500 hover:bg-red-700 rounded-lg shadow-lg"
+                                                onclick="return confirm('Yakin ingin menghapus?')">
+                                                Delete
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-app-layout>

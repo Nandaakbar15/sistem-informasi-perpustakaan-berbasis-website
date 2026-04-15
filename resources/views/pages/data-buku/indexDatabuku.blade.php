@@ -64,7 +64,7 @@
                                 </td>
                                 <td class="px-2 first:pl-5 last:pr-5 py-3 whitespace-nowrap w-px">
                                     <div class="flex items-center justify-center space-x-2">
-                                        <a href="/admin/editdatabuku/{{ $data->id_buku }}"
+                                        <a href="/admin/view-edit-buku/{{ $data->id_buku }}"
                                             class="inline-block py-2 px-3 text-white bg-blue-500 hover:bg-blue-700 rounded-lg shadow-lg">
                                             Edit
                                         </a>
